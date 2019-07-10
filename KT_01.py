@@ -6,19 +6,27 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+
 
 def remove_ws(str):
     return ' '.join(str.replace('\n\n', '').replace('\t', '').strip('\n ').split())
 
 
 def count(driver):
+    time.sleep(1)
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
-    count = (int(soup.find(class_='fare-list-area').find(class_='inner')
-                 .find(class_="btn-more").span.text.replace('더보기', '').replace('(', '').replace(')', '')) // 5) + 1
-    return count
+    count = int(soup.find(class_='fare-list-area').find(class_='inner')
+                .find(class_="btn-more").span.text.replace('더보기(', '').replace(')', ''))
+    if count % 5 == 0:
+        return (count // 5)
+    else:
+        return (count // 5 + 1)
+
 
 def getList(driver):
+    time.sleep(2)
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
     divs = soup.find('div', class_="plan-list-area")
@@ -53,21 +61,23 @@ driver.get(url)
 html = driver.page_source
 soup = BeautifulSoup(html, 'html.parser')
 
-number = int(soup.find(id='choice1').ul.find_all('li')[-1]['id']) - 1
+page = int(soup.find(id='choice1').ul.find_all('li')[-1]['id']) - 1
 cssSelector = '#cfmClContents > div.fare-list-area > div > div.inner > a'
-for i in range(2, number + 2):
-    page = count(driver)
-    for j in range(0, page):
+for i in range(2, page + 2):
+    number = count(driver)
+    print(number)
+    for j in range(0, number):
         try:
-            WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.CSS_SELECTOR, cssSelector))).click()
-
+            driver.find_element_by_css_selector(cssSelector).send_keys(Keys.ENTER)
+            # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, cssSelector))).click()
             # element = driver.find_element_by_css_selector(cssSelector)
             # driver.execute_script('arguments[0].click()', element)
         except:
             print('x')
 
     getList(driver)
-    if i < number + 2:
+
+    if i < page + 2:
         element = driver.find_element_by_xpath('//*[@id="%d"]' % i)
         driver.execute_script('arguments[0].click()', element)
 
