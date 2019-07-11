@@ -15,23 +15,10 @@ def remove_ws(str):
 
 def isClickable(driver):
     try:
-        time1 = time.time()
-        elem = EC.presence_of_element_located(
-                (By.CLASS_NAME, driver.execute_script("return document.getElementsByClassName('btn-more')[0].className")))
-        WebDriverWait(driver, 10).until(elem)
-
-
-
-        # WebDriverWait(driver, 10).until(
-        #     EC.presence_of_element_located(
-        #         (By.CLASS_NAME, driver.execute_script("return document.getElementsByClassName('btn-more')[0].className"))
-        #     )
-        # )
-        time2 = time.time()
-        print(time2 - time1)
+        WebDriverWait(driver, 3, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, cssSelector)))
     except:
-        print('x')
-    time
+        pass
+
     style = driver.execute_script("return document.getElementsByClassName('btn-more')[0].style.display")
     if style == 'none':
         return False
@@ -68,11 +55,11 @@ def getList(driver):
             print(valueList)
 
 
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
+# options = webdriver.ChromeOptions()
+# options.add_argument('headless')
 # options.add_argument('window-size=1920x1080')
 # options.add_argument("disable-gpu")
-driver = webdriver.Chrome('chromedriver', chrome_options=options)
+driver = webdriver.Chrome()  # 'chromedriver', chrome_options=options
 url = 'https://product.kt.com/wDic/index.do?CateCode=6002'
 driver.get(url)
 html = driver.page_source
@@ -80,17 +67,21 @@ soup = BeautifulSoup(html, 'html.parser')
 
 page = int(soup.find(id='choice1').ul.find_all('li')[-1]['id'])
 cssSelector = '#cfmClContents > div.fare-list-area > div > div.inner > a'
+time1 = time.time()
 for i in range(2, page + 2):
-    while isClickable(driver):
+    while 1:
         try:
-            driver.execute_script("return document.getElementsByClassName('btn-more')[0].click()")
-            # driver.find_element_by_css_selector(cssSelector).send_keys(Keys.ENTER)
+            time2 = time.time()
+            print(time2 - time1)
             # time.sleep(1)
-            # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, cssSelector))).click()
-            # element = driver.find_element_by_css_selector(cssSelector)
-            # driver.execute_script('arguments[0].click()', element)
+            WebDriverWait(driver, 3).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'body')))
+            time1 = time.time()
+            driver.find_element_by_css_selector(cssSelector).send_keys(Keys.ENTER)
+
         except:
-            raise
+            print('에러')
+            break
+
 
     getList(driver)
 
