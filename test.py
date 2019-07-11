@@ -4,20 +4,21 @@ from selenium.webdriver.common.keys import Keys
 
 driver = webdriver.Chrome("chromedriver.exe")
 
-url = 'https://www.ktmmobile.com/loginForm.do'
+# url = 'https://www.ktmmobile.com/loginForm.do'
+url = 'https://nid.naver.com/'
 
 driver.get(url)
 
 ID = 'yechan010226'
 PW = 'chan010226'
-a = input('보안문자:')
+# a = input('보안문자:')
 
-driver.find_element_by_name('userId').send_keys(ID)
-driver.find_element_by_name('passWord').send_keys(PW)
-driver.find_element_by_name('answer').send_keys(a)
+# driver.find_element_by_name('userId').send_keys(ID)
+# driver.find_element_by_name('passWord').send_keys(PW)
+# driver.find_element_by_name('answer').send_keys(a)
 
-# driver.execute_script("document.getElementsByName('id')[0].value=\'"+ ID +"\'")
-# driver.execute_script("document.getElementsByName('pw')[0].value=\'"+ PW +"\'")
+driver.execute_script("document.getElementsByName('id')[0].value=\'"+ ID +"\'")
+driver.execute_script("document.getElementsByName('pw')[0].value=\'"+ PW +"\'")
 
 driver.find_element_by_id('goLoginBtn').click()
 

@@ -3,3 +3,11 @@
 [0702/160252.728:ERROR:filesystem_win.cc(148)] DeleteFile C:\Users\ìƒë‹´ì‚¬\AppData\Local\Temp\scoped_dir8492_312\Crashpad\reports\d4db9551-c0f7-459a-8d1f-c8f773349b5e.dmp: ´Ù¸¥ ÇÁ·Î¼¼½º°¡ ÆÄÀÏÀ» »ç¿ë ÁßÀÌ±â ¶§¹®¿¡ ÇÁ·Î¼¼½º°¡ ¾×¼¼½º ÇÒ ¼ö ¾ø½À´Ï´Ù. (0x20)
 [0702/161138.083:ERROR:process_info.cc(359)] UncheckedAllocate
 [0702/161725.987:ERROR:filesystem_win.cc(148)] DeleteFile C:\Users\ìƒë‹´ì‚¬\AppData\Local\Temp\scoped_dir25264_24072\Crashpad\reports\1ba2710e-ee1c-4bcc-ad8d-0f2c1163bba5.dmp: ´Ù¸¥ ÇÁ·Î¼¼½º°¡ ÆÄÀÏÀ» »ç¿ë ÁßÀÌ±â ¶§¹®¿¡ ÇÁ·Î¼¼½º°¡ ¾×¼¼½º ÇÒ ¼ö ¾ø½À´Ï´Ù. (0x20)
+[0710/163443.473:ERROR:process_reader_win.cc(151)] SuspendThread: ¾×¼¼½º°¡ °ÅºÎµÇ¾ú½À´Ï´Ù. (0x5)
+[0710/163443.473:ERROR:process_reader_win.cc(151)] SuspendThread: ¾×¼¼½º°¡ °ÅºÎµÇ¾ú½À´Ï´Ù. (0x5)
+[0710/163443.473:ERROR:process_reader_win.cc(151)] SuspendThread: ¾×¼¼½º°¡ °ÅºÎµÇ¾ú½À´Ï´Ù. (0x5)
+[0710/163443.473:ERROR:process_reader_win.cc(151)] SuspendThread: ¾×¼¼½º°¡ °ÅºÎµÇ¾ú½À´Ï´Ù. (0x5)
+[0710/163443.473:ERROR:process_reader_win.cc(151)] SuspendThread: ¾×¼¼½º°¡ °ÅºÎµÇ¾ú½À´Ï´Ù. (0x5)
+[0710/163443.473:ERROR:process_reader_win.cc(151)] SuspendThread: ¾×¼¼½º°¡ °ÅºÎµÇ¾ú½À´Ï´Ù. (0x5)
+[0710/163443.473:ERROR:process_reader_win.cc(123)] NtOpenThread: {¾×¼¼½º °ÅºÎ} ÇÁ·Î¼¼½º°¡ °³Ã¼¿¡ ¾×¼¼½º¸¦ ¿ä±¸ÇßÁö¸¸ ¾×¼¼½º ±ÇÇÑÀÌ ¾ø½À´Ï´Ù. (0xc0000022)
+[0710/163443.473:ERROR:exception_snapshot_win.cc(98)] thread ID 21808 not found in process

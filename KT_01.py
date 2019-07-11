@@ -13,20 +13,33 @@ def remove_ws(str):
     return ' '.join(str.replace('\n\n', '').replace('\t', '').strip('\n ').split())
 
 
-def count(driver):
-    time.sleep(1)
-    html = driver.page_source
-    soup = BeautifulSoup(html, 'html.parser')
-    count = int(soup.find(class_='fare-list-area').find(class_='inner')
-                .find(class_="btn-more").span.text.replace('더보기(', '').replace(')', ''))
-    if count % 5 == 0:
-        return (count // 5)
+def isClickable(driver):
+    try:
+        time1 = time.time()
+        elem = EC.presence_of_element_located(
+                (By.CLASS_NAME, driver.execute_script("return document.getElementsByClassName('btn-more')[0].className")))
+        WebDriverWait(driver, 10).until(elem)
+
+
+
+        # WebDriverWait(driver, 10).until(
+        #     EC.presence_of_element_located(
+        #         (By.CLASS_NAME, driver.execute_script("return document.getElementsByClassName('btn-more')[0].className"))
+        #     )
+        # )
+        time2 = time.time()
+        print(time2 - time1)
+    except:
+        print('x')
+    time
+    style = driver.execute_script("return document.getElementsByClassName('btn-more')[0].style.display")
+    if style == 'none':
+        return False
     else:
-        return (count // 5 + 1)
+        return True
 
 
 def getList(driver):
-    time.sleep(2)
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
     divs = soup.find('div', class_="plan-list-area")
@@ -55,29 +68,33 @@ def getList(driver):
             print(valueList)
 
 
-driver = webdriver.Chrome()
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
+# options.add_argument('window-size=1920x1080')
+# options.add_argument("disable-gpu")
+driver = webdriver.Chrome('chromedriver', chrome_options=options)
 url = 'https://product.kt.com/wDic/index.do?CateCode=6002'
 driver.get(url)
 html = driver.page_source
 soup = BeautifulSoup(html, 'html.parser')
 
-page = int(soup.find(id='choice1').ul.find_all('li')[-1]['id']) - 1
+page = int(soup.find(id='choice1').ul.find_all('li')[-1]['id'])
 cssSelector = '#cfmClContents > div.fare-list-area > div > div.inner > a'
 for i in range(2, page + 2):
-    number = count(driver)
-    print(number)
-    for j in range(0, number):
+    while isClickable(driver):
         try:
-            driver.find_element_by_css_selector(cssSelector).send_keys(Keys.ENTER)
+            driver.execute_script("return document.getElementsByClassName('btn-more')[0].click()")
+            # driver.find_element_by_css_selector(cssSelector).send_keys(Keys.ENTER)
+            # time.sleep(1)
             # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, cssSelector))).click()
             # element = driver.find_element_by_css_selector(cssSelector)
             # driver.execute_script('arguments[0].click()', element)
         except:
-            print('x')
+            raise
 
     getList(driver)
 
-    if i < page + 2:
+    if i < page + 1:
         element = driver.find_element_by_xpath('//*[@id="%d"]' % i)
         driver.execute_script('arguments[0].click()', element)
 
